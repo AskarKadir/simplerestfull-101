@@ -11,6 +11,24 @@ package com.askar.pws.askar101.product;
 public class Product {
     private String id;
     private String name;
+    private String total;
+    private String harga;
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getHarga() {
+        return harga;
+    }
+
+    public void setHarga(String harga) {
+        this.harga = harga;
+    }
 
     public String getId() {
         return id;
