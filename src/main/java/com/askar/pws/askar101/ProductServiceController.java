@@ -27,11 +27,15 @@ public class ProductServiceController {
       Product honey = new Product();
       honey.setId("1");
       honey.setName("Madu");
+      honey.setQuantity("3");
+      honey.setPrice("5000");
       productRepo.put(honey.getId(), honey);
       
       Product almond = new Product();
       almond.setId("2");
       almond.setName("Almod");
+      almond.setQuantity("5");
+      almond.setPrice("3000");
       productRepo.put(almond.getId(), almond);
    }
    @RequestMapping(value = "/products")
