@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductServiceController {
     private static Map<String, Product> productRepo = new HashMap<>();
     
+    //mmembuat data awal ketika menggunakan GET JSON
     static {
       Product honey = new Product();
       honey.setId("1");
@@ -38,38 +39,46 @@ public class ProductServiceController {
       almond.setPrice("3000");
       productRepo.put(almond.getId(), almond);
    }
+    
+    //membuat method untuk menampilkan data yang ada pada JSON
    @RequestMapping(value = "/products")
    public ResponseEntity<Object> getProduct() {
       return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
    }
    
+   //membuat method untuk delete data dengan id tertentu
    @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
    public ResponseEntity<Object> delete(@PathVariable("id")String id){
        productRepo.remove(id);
        return new ResponseEntity<>("Product is deleted Successfully", HttpStatus.OK);
    }
    
+   //membuat method untuk update data dengan id tertentu
    @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
    public ResponseEntity<Object> updateProduct(@PathVariable("id")String id, @RequestBody Product product){
        if(!productRepo.containsKey(id)){
            return new ResponseEntity<>("Product is not assigned", HttpStatus.OK);
+           //kondisi jika id tidak ditemukan akan menampilkan pesan "Product is not assigned"
        }else{
            productRepo.remove(id);
            product.setId(id);
            productRepo.put(id, product);
            return new ResponseEntity<>("Product is updated Successfully", HttpStatus.OK);
-           
+           //kondisi jika id ditemukan akan menampilakan "Product is updated Successfully"
        }
        
    }
+   
+   //membuat method untuk menambahkan data
    @RequestMapping(value = "/products", method = RequestMethod.POST)
    public ResponseEntity<Object> createProduct(@RequestBody Product product) {
        if(productRepo.containsKey(product.getId())){
            return new ResponseEntity<>("Product Key can not duplicated", HttpStatus.CREATED);
-
+           //kondisi jika id ada yang sama akan menampilakan pesan "Product Key can not duplicated"
        }else{
            productRepo.put(product.getId(), product);
            return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
+           //kondisi jika id tidak ada yang sama akan menampilkan pesan "Product is created successfully"
        }
    }
    
